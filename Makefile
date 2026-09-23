@@ -26,3 +26,6 @@ env-port-forward:
 
 env-port-close:
 	@docker compose down port-forwarder
+
+app-run:
+	@go run cmd/todo/main.go
