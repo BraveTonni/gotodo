@@ -21,6 +21,6 @@ func (h *UsersHTTPHandler) CreateUser(rw http.ResponseWriter, r *http.Request) {
 	var request CreateUserRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
-		err.Error()
+		// TODO:
 	}
 }
