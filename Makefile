@@ -28,4 +28,4 @@ env-port-close:
 	@docker compose down port-forwarder
 
 app-run:
-	@go run cmd/todo/main.go
+	@go mod tidy && go run cmd/todo/main.go
