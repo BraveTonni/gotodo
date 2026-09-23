@@ -9,4 +9,9 @@ services:
     volumes:
       - ${PROJECT_ROOT}/out/pgdata:/var/lib/postgresql
     restart: always
-    
+  
+  todo-postgres-migrate:
+    image: migrate/migrate:v4.15.2
+    container_name: todo-env-postgres-migrate
+    volumes:
+      - ${PROJECT_ROOT}/migrations:/migrations
