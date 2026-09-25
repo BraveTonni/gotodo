@@ -26,7 +26,7 @@ func NewConfig() (Config, error) {
 	return config, nil
 }
 
-func NewConfigMust() (Config, error) {
+func NewConfigMust() Config {
 	config, err := NewConfig()
 
 	if err != nil {
@@ -34,5 +34,5 @@ func NewConfigMust() (Config, error) {
 		panic(err)
 	}
 
-	return config, nil
+	return config
 }
