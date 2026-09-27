@@ -4,5 +4,5 @@ type UserModel struct {
 	ID          int
 	Version     int
 	FullName    string
-	PhoneNumber string
+	PhoneNumber *string
 }
