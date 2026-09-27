@@ -9,7 +9,7 @@ type UserModel struct {
 	PhoneNumber *string
 }
 
-func userDomainsFromDomels(users []UserModel) []domain.User {
+func userDomainsFromDomains(users []UserModel) []domain.User {
 	userDomains := make([]domain.User, len(users))
 
 	for i, user := range users {

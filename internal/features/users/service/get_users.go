@@ -18,7 +18,7 @@ func (s *UsersService) GetUsers(
 	}
 
 	if offset != nil && *offset < 0 {
-		return nil, fmt.Errorf("limit must be not negative: %w", core_errors.InvalidArgument)
+		return nil, fmt.Errorf("offset must be not negative: %w", core_errors.InvalidArgument)
 	}
 
 	users, err := s.usersRepository.GetUsers(ctx, limit, offset)
