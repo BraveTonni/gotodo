@@ -60,7 +60,7 @@ func (u *User) Validate() error {
 			)
 		}
 
-		re := regexp.MustCompile(`^+[0-9]+$`)
+		re := regexp.MustCompile(`^\+[0-9]+$`)
 
 		if !re.MatchString(*u.PhoneNumber) {
 			return fmt.Errorf(
