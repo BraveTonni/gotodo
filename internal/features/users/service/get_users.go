@@ -14,8 +14,18 @@ func (s *UsersService) GetUsers(
 	offset *int,
 ) ([]domain.User, error) {
 	if limit != nil && *limit < 0 {
-		return nil, fmt.Errorf("limit must be not negative", core_errors.InvalidArgument)
+		return nil, fmt.Errorf("limit must be not negative: %w", core_errors.InvalidArgument)
 	}
 
-	return nil, nil
+	if offset != nil && *offset < 0 {
+		return nil, fmt.Errorf("limit must be not negative: %w", core_errors.InvalidArgument)
+	}
+
+	users, err := s.usersRepository.GetUsers(ctx, limit, offset)
+
+	if err != nil {
+		return nil, fmt.Errorf("get users from repo: %w", err)
+	}
+
+	return users, nil
 }
