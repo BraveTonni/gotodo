@@ -12,6 +12,7 @@ env-up:
 env-down:
 	@echo "Tearing down the environment..."
 	@docker-compose down todo-postgres
+	@docker-compose down port-forwarder
 	@echo "Environment has been torn down."
 
 migrate-create:
