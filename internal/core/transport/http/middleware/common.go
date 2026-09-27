@@ -80,6 +80,7 @@ func Metrics() Middleware {
 			start_time := time.Now()
 			log.Debug(
 				">>> incoming HTTP REQUEST",
+				zap.String("http_method", r.Method),
 				zap.Time("time", start_time.UTC()),
 			)
 
