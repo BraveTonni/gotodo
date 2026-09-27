@@ -11,6 +11,8 @@ import (
 	core_postgres_pool "github.com/BraveTonni/gotodo/internal/core/repository/postgres/pool"
 	core_http_middleware "github.com/BraveTonni/gotodo/internal/core/transport/http/middleware"
 	core_http_server "github.com/BraveTonni/gotodo/internal/core/transport/http/server"
+	users_postgres_repository "github.com/BraveTonni/gotodo/internal/features/users/repository/postgres"
+	users_service "github.com/BraveTonni/gotodo/internal/features/users/service"
 	users_transport_http "github.com/BraveTonni/gotodo/internal/features/users/transport/http"
 	"go.uber.org/zap"
 )
@@ -39,15 +41,15 @@ func main() {
 
 	defer pool.Close()
 
+	logger.Debug("initializing feature", zap.String("feature", "users"))
+	usersRepository := users_postgres_repository.NewUsersRepository(pool)
+	usersService := users_service.NewUsersService(usersRepository)
+
 	logger.Debug("Starting app")
 
-	usersTransportHttp := users_transport_http.NewUsersHTTPHandler(nil)
+	usersTransportHttp := users_transport_http.NewUsersHTTPHandler(usersService)
 
-	usersRoutes := usersTransportHttp.Routes()
-	apiVersionRouter := core_http_server.NewAPIVersionRouter(core_http_server.APIVersion1)
-
-	apiVersionRouter.RegisterRoutes(usersRoutes...)
-
+	logger.Debug("initialize http server")
 	httpServer := core_http_server.NewHTTPServer(
 		core_http_server.NewConfigMust(),
 		logger,
@@ -56,6 +58,8 @@ func main() {
 		core_http_middleware.Panic(),
 		core_http_middleware.Metrics(),
 	)
+	apiVersionRouter := core_http_server.NewAPIVersionRouter(core_http_server.APIVersion1)
+	apiVersionRouter.RegisterRoutes(usersTransportHttp.Routes()...)
 
 	httpServer.RegisterAPIRouters(apiVersionRouter)
 

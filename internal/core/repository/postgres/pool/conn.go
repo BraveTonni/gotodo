@@ -29,7 +29,7 @@ func NewConnectionPool(
 	config Config,
 ) (*ConnectionPool, error) {
 	connectionString := fmt.Sprintf(
-		"postgress://%s:%s@%s:%s/%s?sslMode=disable",
+		"postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		config.User, config.Password,
 		config.Host, config.Port,
 		config.Database,
